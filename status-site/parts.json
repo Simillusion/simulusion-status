@@ -1,0 +1,10 @@
+[
+  { "slug": "website", "name": "Website", "about": "simulusion.co: the site, docs and pricing." },
+  { "slug": "sign-in", "name": "Sign-in", "about": "Signing in to the platform." },
+  { "slug": "web-app", "name": "Web app", "about": "The platform in the browser." },
+  { "slug": "api", "name": "API", "about": "The platform's API and Python client." },
+  { "slug": "hosted-sessions", "name": "Hosted sessions", "about": "Starting and running environments on our servers." },
+  { "slug": "recordings", "name": "Recordings and replays", "about": "Saving recordings, replays and downloads." },
+  { "slug": "gpu-machines", "name": "GPU machines", "about": "Connecting your own machines and running experiments on them." },
+  { "slug": "project-earth", "name": "Project Earth", "about": "Real-world driving worlds, run by Metaplanets." }
+]

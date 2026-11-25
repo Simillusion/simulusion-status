@@ -1,17 +1,28 @@
-# Uptime checks and status page for Simulusion (Upptime).
+# Uptime checks for status.simulusion.co (Upptime). The page itself is built
+# by status-site/build.mjs (workflow "Status page"); slugs match
+# status-site/parts.json.
 owner: Simillusion
 repo: simulusion-status
 
 sites:
   - name: Website
+    slug: website
     url: https://simulusion.co
-  - name: Platform
+  - name: Sign-in
+    slug: sign-in
+    url: https://platform.simulusion.co/signin/
+  - name: Web app
+    slug: web-app
     url: https://platform.simulusion.co/
-  - name: Platform API
-    url: https://platform.simulusion.co/v0/me
+  - name: API
+    slug: api
     # Without a token the API answers 401: that means it is up.
+    url: https://platform.simulusion.co/v0/me
     expectedStatusCodes:
       - 401
+  # Hosted sessions, Recordings and replays, GPU machines and Project Earth
+  # are checked at https://platform.simulusion.co/v0/health/<part> once the
+  # platform serves those addresses.
 
 status-website:
   # DNS at GoDaddy: CNAME status -> simillusion.github.io
@@ -19,8 +30,3 @@ status-website:
   name: Simulusion status
   introTitle: "Simulusion status"
   introMessage: Live status of the Simulusion website and platform.
-  navbar:
-    - title: Status
-      href: /
-    - title: Simulusion
-      href: https://simulusion.co

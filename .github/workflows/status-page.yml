@@ -1,0 +1,49 @@
+# Builds status.simulusion.co from Upptime's data and this repository's
+# issues (status-site/build.mjs), and deploys it to GitHub Pages. Upptime's own
+# Static Site CI still runs, but Pages serves this site instead (source:
+# GitHub Actions).
+name: Status page
+on:
+  workflow_run:
+    workflows: ["Uptime CI", "Response Time CI", "Summary CI", "Setup CI"]
+    types: [completed]
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled, deleted]
+  issue_comment:
+    types: [created, edited, deleted]
+  push:
+    branches: [master]
+    paths: ["status-site/**", ".github/workflows/status-page.yml"]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+  pages: write
+  id-token: write
+concurrency:
+  group: status-page
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node status-site/build.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deploy
+        uses: actions/deploy-pages@v4
