@@ -14,10 +14,8 @@ sites:
       - 401
 
 status-website:
-  # At launch: add DNS "CNAME status -> simillusion.github.io", then
-  # uncomment cname, delete baseUrl, and turn on Enforce HTTPS in Pages.
-  # cname: status.simulusion.co
-  baseUrl: /simulusion-status
+  # DNS at GoDaddy: CNAME status -> simillusion.github.io
+  cname: status.simulusion.co
   name: Simulusion status
   introTitle: "Simulusion status"
   introMessage: Live status of the Simulusion website and platform.
