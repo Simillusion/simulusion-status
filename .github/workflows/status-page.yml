@@ -22,17 +22,17 @@ on:
 permissions:
   contents: read
   issues: read
+  actions: read
   pages: write
   id-token: write
 concurrency:
   group: status-page
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
-  deploy:
+  # Build and deploy are separate jobs, as in GitHub's own Pages workflow: in
+  # one job, deploy-pages sometimes looked for the artifact before it showed.
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,5 +47,12 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
       - id: deploy
         uses: actions/deploy-pages@v4
