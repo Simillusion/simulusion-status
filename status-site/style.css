@@ -131,7 +131,13 @@ main { display: flex; flex-direction: column; gap: 32px; padding-bottom: 48px; }
 .day.degraded { background: var(--warning); }
 .day.outage { background: var(--error); }
 .day.none { background: var(--none); }
-a.day:hover, span.day:hover, .day:focus-visible { outline: 2px solid var(--text); outline-offset: 1px; }
+/* The hovered day: a thin ring on the bar's own corners (an outline with an
+   offset drew a thick capsule around these narrow bars). */
+.bars .day:hover, .bars .day:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--text);
+  filter: brightness(0.92);
+}
 .bar-foot { display: flex; justify-content: space-between; margin-top: 6px; color: var(--text-soft); font-size: 12px; }
 .span-label::before { content: "90 days ago"; }
 .legend { display: flex; gap: 14px; list-style: none; margin: 0 0 12px; padding: 0; color: var(--text-soft); font-size: 12px; }
