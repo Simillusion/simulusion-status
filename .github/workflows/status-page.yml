@@ -2,11 +2,13 @@
 # issues (status-site/build.mjs), and deploys it to GitHub Pages. Upptime's own
 # Static Site CI still runs, but Pages serves this site instead (source:
 # GitHub Actions).
+#
+# Rebuilt every 10 minutes (Upptime checks every 5 and marks its commits
+# [skip ci], so a push never triggers this), and at once when an incident or
+# maintenance issue changes. Not on workflow_run: deploy-pages can't find its
+# artifact in runs started that way.
 name: Status page
 on:
-  workflow_run:
-    workflows: ["Uptime CI", "Response Time CI", "Summary CI", "Setup CI"]
-    types: [completed]
   issues:
     types: [opened, edited, closed, reopened, labeled, unlabeled, deleted]
   issue_comment:
@@ -15,7 +17,7 @@ on:
     branches: [master]
     paths: ["status-site/**", ".github/workflows/status-page.yml"]
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
